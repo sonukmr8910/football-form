@@ -23,6 +23,10 @@ public class PlayerService {
         return playerRepository.getById(id);
     }
 
+    public List<Player> getAllPlayers() {
+        return playerRepository.findAll();
+    }
+
     public boolean savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         Player player = new Player(id, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
         playerRepository.save(player);
