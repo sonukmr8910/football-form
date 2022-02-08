@@ -20,7 +20,7 @@ public class PlayerService {
     }
 
     public Player getPlayer(Long id) {
-        return playerRepository.getById(id);
+        return playerRepository.getPlayerById(id).orElse(null);
     }
 
     public List<Player> getAllPlayers() {
