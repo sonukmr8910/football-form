@@ -19,6 +19,11 @@ public class StateService {
         return stateRepository.getById(id);
     }
 
+    public boolean saveState(State state) {
+        stateRepository.save(state);
+        return true;
+    }
+
     public boolean saveState(Long id, String name, Country country) {
         State state = new State(id, name, country);
         stateRepository.save(state);

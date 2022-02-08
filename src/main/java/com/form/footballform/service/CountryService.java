@@ -18,6 +18,11 @@ public class CountryService {
         return countryRepository.getById(id);
     }
 
+    public boolean saveCountry(Country country) {
+        countryRepository.save(country);
+        return true;
+    }
+    
     public boolean saveCountry(Long id, String name) {
         Country country = new Country(id, name);
         countryRepository.save(country);

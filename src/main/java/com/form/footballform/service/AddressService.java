@@ -19,6 +19,11 @@ public class AddressService {
         return addressRepository.getById(id);
     }
 
+    public boolean saveAddress(Address address) {
+        addressRepository.save(address);
+        return true;
+    }
+
     public boolean saveAddress(Long id, String address, City city, int pinCode) {
         Address a = new Address(id, address, city, pinCode);
         addressRepository.save(a);

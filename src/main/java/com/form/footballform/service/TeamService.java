@@ -18,6 +18,11 @@ public class TeamService {
         return teamRepository.getById(id);
     }
 
+    public boolean saveTeam(Team team) {
+        teamRepository.save(team);
+        return true;
+    }
+
     public boolean saveTeam(Long id, String name) {
         Team team = new Team(id, name);
         teamRepository.save(team);

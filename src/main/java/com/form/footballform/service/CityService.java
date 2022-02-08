@@ -19,6 +19,11 @@ public class CityService {
         return cityRepository.getById(id);
     }
 
+    public boolean saveCity(City city) {
+        cityRepository.save(city);
+        return true;
+    }
+
     public boolean saveCity(Long id, String name, State state) {
         City city = new City(id, name, state);
         cityRepository.save(city);
