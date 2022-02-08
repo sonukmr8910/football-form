@@ -1,7 +1,12 @@
 package com.form.footballform.models;
 
+import javax.persistence.*;
+
+@Entity
 public class Position {
+    @Id
     private Long id;
+
     private String name;
 
     public Position() {

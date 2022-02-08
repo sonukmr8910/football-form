@@ -1,6 +1,10 @@
 package com.form.footballform.models;
 
+import javax.persistence.*;
+
+@Entity
 public class Country {
+    @Id
     private Long id;
     private String name;
 

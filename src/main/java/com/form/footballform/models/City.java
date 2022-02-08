@@ -1,8 +1,16 @@
 package com.form.footballform.models;
 
+import javax.persistence.*;
+
+@Entity
 public class City {
+    @Id
     private Long id;
+
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id")
     private State state;
 
     public City() {

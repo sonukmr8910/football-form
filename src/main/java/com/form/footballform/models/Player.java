@@ -1,22 +1,36 @@
 package com.form.footballform.models;
 
+import com.form.footballform.models.converters.StringPositionConverter;
+
+import javax.persistence.*;
 import java.util.List;
 
-public class User {
+@Entity
+public class Player {
+    @Id
     private Long id;
+
     private String userName;
     private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
     private Address address;
-    private List<Team> desiredTeams;
+
+    @ManyToOne
+    @JoinColumn(name = "desired_team_id")
+    private Team desiredTeam;
+
+    @Convert(converter = StringPositionConverter.class)
     private List<Position> desiredPositions;
 
-    public User() {
+    public Player() {
     }
 
-    public User(Long id, String userName, String firstName, String lastName, String phoneNumber, String email, Address address, List<Team> desiredTeams, List<Position> desiredPositions) {
+    public Player(Long id, String userName, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -24,18 +38,18 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
-        this.desiredTeams = desiredTeams;
+        this.desiredTeam = desiredTeam;
         this.desiredPositions = desiredPositions;
     }
 
-    public User(String userName, String firstName, String lastName, String phoneNumber, String email, Address address, List<Team> desiredTeams, List<Position> desiredPositions) {
+    public Player(String userName, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
-        this.desiredTeams = desiredTeams;
+        this.desiredTeam = desiredTeam;
         this.desiredPositions = desiredPositions;
     }
 
@@ -95,12 +109,12 @@ public class User {
         this.address = address;
     }
 
-    public List<Team> getDesiredTeams() {
-        return desiredTeams;
+    public Team getDesiredTeam() {
+        return desiredTeam;
     }
 
-    public void setDesiredTeams(List<Team> desiredTeams) {
-        this.desiredTeams = desiredTeams;
+    public void setDesiredTeam(Team desiredTeam) {
+        this.desiredTeam = desiredTeam;
     }
 
     public List<Position> getDesiredPositions() {
@@ -113,7 +127,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Player{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
@@ -121,7 +135,7 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", address=" + address +
-                ", desiredTeams=" + desiredTeams +
+                ", desiredTeam=" + desiredTeam +
                 ", desiredPositions=" + desiredPositions +
                 '}';
     }

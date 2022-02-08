@@ -1,11 +1,26 @@
 package com.form.footballform.models;
 
+import javax.persistence.*;
+
+@Entity
 public class Address {
+    @Id
     private Long id;
+
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city;
+
+    @ManyToOne
+    @JoinColumn(name = "state_id")
     private State state;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
     private Country country;
+
     private int pinCode;
 
     public Address() {
