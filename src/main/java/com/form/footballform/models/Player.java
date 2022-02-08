@@ -13,7 +13,9 @@ public class Player {
     )
     private Long id;
 
+    @Column(unique = true)
     private String userName;
+
     private String firstName;
     private String lastName;
     private String phoneNumber;
