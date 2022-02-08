@@ -12,6 +12,7 @@ import static java.util.Collections.emptyList;
 @Converter
 public class StringPositionConverter implements AttributeConverter<List<Position>, String> {
     private static final String SPLIT_CHAR = ";";
+    private static final String DASH_CHAR = "-";
 
     @Override
     public String convertToDatabaseColumn(List<Position> positionList) {
@@ -22,11 +23,13 @@ public class StringPositionConverter implements AttributeConverter<List<Position
         StringBuilder stringBuilder = new StringBuilder();
         for(int i=0; i<positionList.size()-1; i++) {
             stringBuilder.append(positionList.get(i).getId());
-            stringBuilder.append("-");
+            stringBuilder.append(DASH_CHAR);
             stringBuilder.append(positionList.get(i).getName());
-            stringBuilder.append(";");
+            stringBuilder.append(SPLIT_CHAR);
         }
-        stringBuilder.append(positionList.get(positionList.size()-1));
+        stringBuilder.append(positionList.get(positionList.size()-1).getId());
+        stringBuilder.append(DASH_CHAR);
+        stringBuilder.append(positionList.get(positionList.size()-1).getName());
         return stringBuilder.toString();
     }
 
@@ -39,8 +42,13 @@ public class StringPositionConverter implements AttributeConverter<List<Position
         String[] strings = string.split(SPLIT_CHAR);
         List<Position> positionList = new ArrayList<>();
         for(String s : strings) {
-            String[] idAndName = s.split(SPLIT_CHAR);
-            positionList.add(new Position(Long.parseLong(idAndName[0]), idAndName[1]));
+            String[] idAndName = s.split(DASH_CHAR);
+            try {
+                long l = Long.parseLong(idAndName[0]);
+                positionList.add(new Position(l, idAndName[1]));
+            } catch (NumberFormatException e) {
+                positionList.add(new Position(idAndName[1]));
+            }
         }
         return positionList;
     }
