@@ -27,6 +27,11 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
+    public boolean savePlayer(Player player) {
+        playerRepository.save(player);
+        return true;
+    }
+
     public boolean savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         Player player = new Player(id, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
         playerRepository.save(player);
