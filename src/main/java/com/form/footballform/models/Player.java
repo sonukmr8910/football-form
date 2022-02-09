@@ -1,6 +1,6 @@
 package com.form.footballform.models;
 
-import com.form.footballform.models.converters.StringPositionConverter;
+import com.form.footballform.models.converter.StringPositionConverter;
 
 import javax.persistence.*;
 import java.util.List;

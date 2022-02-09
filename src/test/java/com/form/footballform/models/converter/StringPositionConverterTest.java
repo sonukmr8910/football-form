@@ -1,4 +1,4 @@
-package com.form.footballform.models.converters;
+package com.form.footballform.models.converter;
 
 import com.form.footballform.models.Position;
 import org.junit.jupiter.api.BeforeEach;
