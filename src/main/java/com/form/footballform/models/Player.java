@@ -8,8 +8,14 @@ import java.util.List;
 @Entity
 public class Player {
     @Id
+    @SequenceGenerator(
+            name = "player_sequence",
+            sequenceName = "player_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "player_sequence"
     )
     private Long id;
 

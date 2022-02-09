@@ -5,8 +5,14 @@ import javax.persistence.*;
 @Entity
 public class Country {
     @Id
+    @SequenceGenerator(
+            name = "country_sequence",
+            sequenceName = "country_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "country_sequence"
     )
     private Long id;
     private String name;

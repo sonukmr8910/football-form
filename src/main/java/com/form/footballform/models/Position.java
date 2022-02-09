@@ -5,8 +5,14 @@ import javax.persistence.*;
 @Entity
 public class Position {
     @Id
+    @SequenceGenerator(
+            name = "position_sequence",
+            sequenceName = "position_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "position_sequence"
     )
     private Long id;
 

@@ -5,8 +5,14 @@ import javax.persistence.*;
 @Entity
 public class Team {
     @Id
+    @SequenceGenerator(
+            name = "team_sequence",
+            sequenceName = "team_sequence",
+            allocationSize = 1
+    )
     @GeneratedValue(
-            strategy = GenerationType.AUTO
+            strategy = GenerationType.SEQUENCE,
+            generator = "team_sequence"
     )
     private Long id;
 
