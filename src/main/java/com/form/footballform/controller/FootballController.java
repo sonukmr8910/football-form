@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "api/v1/football")
 public class FootballController {
@@ -18,24 +20,37 @@ public class FootballController {
         this.playerService = playerService;
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Response<Player>> getPlayer(@PathVariable("id") Long id) {
+    @GetMapping("{userid}")
+    public ResponseEntity<Response<Player>> getPlayer(@PathVariable("userid") String userid) {
+        Long id;
         final Response<Player> response;
-        final Player player = playerService.getPlayer(id);
 
-        if (player != null) {
+        try {
+            id = Long.parseLong(userid);
+        }
+        catch (NumberFormatException e) {
             response = new Response.ResponseBuilder<Player>()
-                    .setHttpStatusCode(HttpStatus.OK.value())
-                    .setData(player)
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Invalid User Id")
                     .build();
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        String errorMessage = String.format("User with id %d not found", id);
+        final Optional<Player> player = playerService.getPlayer(id);
+
+        if (player.isEmpty()) {
+            String errorMessage = String.format("User with id %d not found", id);
+            response = new Response.ResponseBuilder<Player>()
+                    .setHttpStatusCode(HttpStatus.NOT_FOUND.value())
+                    .setErrorMessage(errorMessage)
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
         response = new Response.ResponseBuilder<Player>()
-                .setHttpStatusCode(HttpStatus.NOT_FOUND.value())
-                .setErrorMessage(errorMessage)
+                .setHttpStatusCode(HttpStatus.OK.value())
+                .setData(player.get())
                 .build();
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
