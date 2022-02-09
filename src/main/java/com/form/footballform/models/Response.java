@@ -1,7 +1,10 @@
 package com.form.footballform.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response<T> {
     private final LocalDateTime dateTime;
     private final int httpStatusCode;
