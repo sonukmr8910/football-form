@@ -20,9 +20,11 @@ public class FootballController {
 
     @GetMapping("{id}")
     public ResponseEntity<Response<Player>> getPlayer(@PathVariable("id") Long id) {
-        Player player = playerService.getPlayer(id);
+        final Response<Player> response;
+        final Player player = playerService.getPlayer(id);
+
         if (player != null) {
-            Response<Player> response = new Response.ResponseBuilder<Player>()
+            response = new Response.ResponseBuilder<Player>()
                     .setHttpStatusCode(HttpStatus.OK.value())
                     .setData(player)
                     .build();
@@ -30,10 +32,10 @@ public class FootballController {
         }
 
         String errorMessage = String.format("User with id %d not found", id);
-        return new ResponseEntity<>(new Response.ResponseBuilder<Player>()
+        response = new Response.ResponseBuilder<Player>()
                 .setHttpStatusCode(HttpStatus.NOT_FOUND.value())
                 .setErrorMessage(errorMessage)
-                .build()
-                , HttpStatus.NOT_FOUND);
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }
