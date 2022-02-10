@@ -1,15 +1,13 @@
 package com.form.footballform.controller;
 
-import com.form.footballform.models.Player;
-import com.form.footballform.models.Response;
-import com.form.footballform.service.PlayerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.form.footballform.models.*;
+import com.form.footballform.models.request.PlayerRequest;
+import com.form.footballform.models.response.Response;
+import com.form.footballform.models.validator.impl.PlayerRequestValidator;
+import com.form.footballform.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,7 +16,6 @@ import java.util.Optional;
 public class FootballController {
     private final PlayerService playerService;
 
-    @Autowired
     public FootballController(PlayerService playerService) {
         this.playerService = playerService;
     }
@@ -52,6 +49,29 @@ public class FootballController {
         response = new Response.ResponseBuilder<Player>()
                 .setHttpStatusCode(HttpStatus.OK.value())
                 .setData(player.get())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Response<Player>> savePlayer(@RequestBody PlayerRequest playerRequest) {
+        PlayerRequestValidator requestValidator = new PlayerRequestValidator(playerRequest);
+
+        if (!requestValidator.isValid()) {
+            Response<Player> response = new Response.ResponseBuilder<Player>()
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Invalid form data")
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        Player playerFromRequest = playerService.getPlayer(playerRequest);
+
+        Player savedPlayer = playerService.savePlayer(playerFromRequest);
+        Response<Player> response = new Response.ResponseBuilder<Player>()
+                .setHttpStatusCode(HttpStatus.OK.value())
+                .setMessage("Player data saved")
+                .setData(savedPlayer)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
