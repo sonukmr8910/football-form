@@ -28,18 +28,16 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
-    public boolean savePlayer(Player player) {
-        playerRepository.save(player);
-        return true;
+    public Player savePlayer(Player player) {
+        return playerRepository.save(player);
     }
 
-    public boolean savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         Player player = new Player(id, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
-        playerRepository.save(player);
-        return true;
+        return playerRepository.save(player);
     }
 
-    public boolean savePlayer(String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player savePlayer(String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
         return savePlayer(null, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
     }
 }
