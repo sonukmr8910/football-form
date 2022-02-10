@@ -1,4 +1,4 @@
-package com.form.footballform.models;
+package com.form.footballform.models.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
