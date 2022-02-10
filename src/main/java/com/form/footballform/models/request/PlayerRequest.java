@@ -9,17 +9,17 @@ public class PlayerRequest {
     private String phoneNumber;
     private String email;
     private String address;
-    private int city;
-    private int state;
-    private int country;
+    private Long city;
+    private Long state;
+    private Long country;
     private int pinCode;
-    private int desiredTeam;
-    private List<Integer> desiredPositions;
+    private Long desiredTeam;
+    private List<Long> desiredPositions;
 
     public PlayerRequest() {
     }
 
-    public PlayerRequest(String userName, String firstName, String lastName, String phoneNumber, String email, String address, int city, int state, int country, int pinCode, int desiredTeam, List<Integer> desiredPositions) {
+    public PlayerRequest(String userName, String firstName, String lastName, String phoneNumber, String email, String address, Long city, Long state, Long country, int pinCode, Long desiredTeam, List<Long> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -82,27 +82,27 @@ public class PlayerRequest {
         this.address = address;
     }
 
-    public int getCity() {
+    public Long getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(Long city) {
         this.city = city;
     }
 
-    public int getState() {
+    public Long getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Long state) {
         this.state = state;
     }
 
-    public int getCountry() {
+    public Long getCountry() {
         return country;
     }
 
-    public void setCountry(int country) {
+    public void setCountry(Long country) {
         this.country = country;
     }
 
@@ -114,19 +114,19 @@ public class PlayerRequest {
         this.pinCode = pinCode;
     }
 
-    public int getDesiredTeam() {
+    public Long getDesiredTeam() {
         return desiredTeam;
     }
 
-    public void setDesiredTeam(int desiredTeam) {
+    public void setDesiredTeam(Long desiredTeam) {
         this.desiredTeam = desiredTeam;
     }
 
-    public List<Integer> getDesiredPositions() {
+    public List<Long> getDesiredPositions() {
         return desiredPositions;
     }
 
-    public void setDesiredPositions(List<Integer> desiredPositions) {
+    public void setDesiredPositions(List<Long> desiredPositions) {
         this.desiredPositions = desiredPositions;
     }
 
