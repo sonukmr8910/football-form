@@ -19,18 +19,16 @@ public class StateService {
         return stateRepository.getById(id);
     }
 
-    public boolean saveState(State state) {
-        stateRepository.save(state);
-        return true;
+    public State saveState(State state) {
+        return saveState(state.getId(), state.getName(), state.getCountry());
     }
 
-    public boolean saveState(Long id, String name, Country country) {
+    public State saveState(Long id, String name, Country country) {
         State state = new State(id, name, country);
-        stateRepository.save(state);
-        return true;
+        return stateRepository.save(state);
     }
 
-    public boolean saveState(String name, Country country) {
+    public State saveState(String name, Country country) {
         return saveState(null, name, country);
     }
 }

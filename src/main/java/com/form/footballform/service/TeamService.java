@@ -18,18 +18,16 @@ public class TeamService {
         return teamRepository.getById(id);
     }
 
-    public boolean saveTeam(Team team) {
-        teamRepository.save(team);
-        return true;
+    public Team saveTeam(Team team) {
+        return saveTeam(team.getId(), team.getName());
     }
 
-    public boolean saveTeam(Long id, String name) {
+    public Team saveTeam(Long id, String name) {
         Team team = new Team(id, name);
-        teamRepository.save(team);
-        return true;
+        return teamRepository.save(team);
     }
 
-    public boolean saveTeam(String name) {
+    public Team saveTeam(String name) {
         return saveTeam(null, name);
     }
 }

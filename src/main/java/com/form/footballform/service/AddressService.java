@@ -19,18 +19,16 @@ public class AddressService {
         return addressRepository.getById(id);
     }
 
-    public boolean saveAddress(Address address) {
-        addressRepository.save(address);
-        return true;
+    public Address saveAddress(Address address) {
+        return addressRepository.save(address);
     }
 
-    public boolean saveAddress(Long id, String address, City city, int pinCode) {
+    public Address saveAddress(Long id, String address, City city, int pinCode) {
         Address a = new Address(id, address, city, pinCode);
-        addressRepository.save(a);
-        return true;
+        return saveAddress(a);
     }
 
-    public boolean saveAddress(String address, City city, int pinCode) {
+    public Address saveAddress(String address, City city, int pinCode) {
         return saveAddress(null, address, city, pinCode);
     }
 }

@@ -19,18 +19,16 @@ public class CityService {
         return cityRepository.getById(id);
     }
 
-    public boolean saveCity(City city) {
-        cityRepository.save(city);
-        return true;
+    public City saveCity(City city) {
+        return saveCity(city.getId(), city.getName(), city.getState());
     }
 
-    public boolean saveCity(Long id, String name, State state) {
+    public City saveCity(Long id, String name, State state) {
         City city = new City(id, name, state);
-        cityRepository.save(city);
-        return true;
+        return cityRepository.save(city);
     }
 
-    public boolean saveCity(String name, State state) {
+    public City saveCity(String name, State state) {
         return saveCity(null, name, state);
     }
 }

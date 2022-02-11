@@ -18,18 +18,16 @@ public class PositionService {
         return positionRepository.getById(id);
     }
 
-    public boolean savePosition(Position position) {
-        positionRepository.save(position);
-        return true;
+    public Position savePosition(Position position) {
+        return savePosition(position.getId(), position.getName());
     }
 
-    public boolean savePosition(Long id, String name) {
+    public Position savePosition(Long id, String name) {
         Position position = new Position(id, name);
-        positionRepository.save(position);
-        return true;
+        return positionRepository.save(position);
     }
 
-    public boolean savePosition(String name) {
+    public Position savePosition(String name) {
         return savePosition(null, name);
     }
 }
