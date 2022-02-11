@@ -2,8 +2,8 @@ package com.form.footballform.config;
 
 import com.form.footballform.models.*;
 import com.form.footballform.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Configuration
 public class TempConfig {
 
-    @Autowired
+    @Bean
     CommandLineRunner commandLineRunner(
             CountryService countryService,
             StateService stateService,
@@ -22,17 +22,12 @@ public class TempConfig {
             PlayerService playerService) {
 
         return args -> {
-            Country country = new Country("India");
-            country = countryService.saveCountry(country);
-            State state = new State("Punjab", country);
-            state = stateService.saveState(state);
-            City city = new City("Mohali", state);
-            city = cityService.saveCity(city);
-            Address address = new Address("Phase 1", city, 110011);
-            address = addressService.saveAddress(address);
+            Country country = countryService.saveCountry(new Country("India"));
+            State state = stateService.saveState(new State("Punjab", country));
+            City city = cityService.saveCity(new City("Mohali", state));
+            Address address = addressService.saveAddress(new Address("Phase 1", city, 110011));
 
-            Team desiredTeam = new Team("Barcelona");
-            desiredTeam = teamService.saveTeam(desiredTeam);
+            Team desiredTeam = teamService.saveTeam(new Team("Barcelona"));
             List<Position> desiredPosition = List.of(
                     positionService.savePosition(new Position("Goal Keeper")),
                     positionService.savePosition(new Position("Defender"))
