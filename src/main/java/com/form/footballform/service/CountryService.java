@@ -5,6 +5,8 @@ import com.form.footballform.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CountryService {
     private final CountryRepository countryRepository;
@@ -14,8 +16,8 @@ public class CountryService {
         this.countryRepository = countryRepository;
     }
 
-    public Country getCountry(Long id) {
-        return countryRepository.getById(id);
+    public Optional<Country> getCountry(Long id) {
+        return countryRepository.getCountryById(id);
     }
 
     public Country saveCountry(Country country) {

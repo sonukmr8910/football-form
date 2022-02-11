@@ -6,6 +6,8 @@ import com.form.footballform.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CityService {
     private final CityRepository cityRepository;
@@ -15,8 +17,8 @@ public class CityService {
         this.cityRepository = cityRepository;
     }
 
-    public City getCity(Long id) {
-        return cityRepository.getById(id);
+    public Optional<City> getCity(Long id) {
+        return cityRepository.getCityById(id);
     }
 
     public City saveCity(City city) {

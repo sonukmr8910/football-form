@@ -5,6 +5,8 @@ import com.form.footballform.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TeamService {
     private final TeamRepository teamRepository;
@@ -14,8 +16,8 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Team getTeam(Long id) {
-        return teamRepository.getById(id);
+    public Optional<Team> getTeam(Long id) {
+        return teamRepository.getTeamById(id);
     }
 
     public Team saveTeam(Team team) {

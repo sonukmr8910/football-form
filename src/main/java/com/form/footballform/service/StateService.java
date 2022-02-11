@@ -6,6 +6,8 @@ import com.form.footballform.repository.StateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class StateService {
     private final StateRepository stateRepository;
@@ -15,8 +17,8 @@ public class StateService {
         this.stateRepository = stateRepository;
     }
 
-    public State getState(Long id) {
-        return stateRepository.getById(id);
+    public Optional<State> getState(Long id) {
+        return stateRepository.getStateById(id);
     }
 
     public State saveState(State state) {

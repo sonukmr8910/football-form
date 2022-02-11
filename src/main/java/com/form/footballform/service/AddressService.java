@@ -6,6 +6,8 @@ import com.form.footballform.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AddressService {
     private final AddressRepository addressRepository;
@@ -15,8 +17,8 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    public Address getAddress(Long id) {
-        return addressRepository.getById(id);
+    public Optional<Address> getAddress(Long id) {
+        return addressRepository.getAddressById(id);
     }
 
     public Address saveAddress(Address address) {

@@ -5,6 +5,8 @@ import com.form.footballform.repository.PositionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PositionService {
     private final PositionRepository positionRepository;
@@ -14,8 +16,8 @@ public class PositionService {
         this.positionRepository = positionRepository;
     }
 
-    public Position getPosition(Long id) {
-        return positionRepository.getById(id);
+    public Optional<Position> getPosition(Long id) {
+        return positionRepository.getPositionById(id);
     }
 
     public Position savePosition(Position position) {
