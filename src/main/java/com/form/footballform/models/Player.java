@@ -27,6 +27,10 @@ public class Player {
     private String phoneNumber;
     private String email;
 
+    @ManyToOne
+    @JoinColumn(name = "age_group_id")
+    private AgeGroup ageGroup;
+
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
@@ -41,24 +45,26 @@ public class Player {
     public Player() {
     }
 
-    public Player(Long id, String userName, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player(Long id, String userName, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.ageGroup = ageGroup;
         this.address = address;
         this.desiredTeam = desiredTeam;
         this.desiredPositions = desiredPositions;
     }
 
-    public Player(String userName, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player(String userName, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.ageGroup = ageGroup;
         this.address = address;
         this.desiredTeam = desiredTeam;
         this.desiredPositions = desiredPositions;
@@ -108,6 +114,14 @@ public class Player {
         return email;
     }
 
+    public AgeGroup getAgeGroup() {
+        return ageGroup;
+    }
+
+    public void setAgeGroup(AgeGroup ageGroup) {
+        this.ageGroup = ageGroup;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -145,6 +159,7 @@ public class Player {
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", ageGroup=" + ageGroup +
                 ", address=" + address +
                 ", desiredTeam=" + desiredTeam +
                 ", desiredPositions=" + desiredPositions +
