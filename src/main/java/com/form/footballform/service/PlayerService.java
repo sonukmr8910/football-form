@@ -1,9 +1,6 @@
 package com.form.footballform.service;
 
-import com.form.footballform.models.Address;
-import com.form.footballform.models.Player;
-import com.form.footballform.models.Position;
-import com.form.footballform.models.Team;
+import com.form.footballform.models.*;
 import com.form.footballform.repository.PlayerRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +27,12 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Player savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
-        Player player = new Player(id, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
+    public Player savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+        Player player = new Player(id, username, firstName, lastName, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
         return playerRepository.save(player);
     }
 
-    public Player savePlayer(String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
-        return savePlayer(null, username, firstName, lastName, phoneNumber, email, address, desiredTeam, desiredPositions);
+    public Player savePlayer(String username, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+        return savePlayer(null, username, firstName, lastName, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
     }
 }
