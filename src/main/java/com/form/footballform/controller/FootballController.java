@@ -3,8 +3,9 @@ package com.form.footballform.controller;
 import com.form.footballform.models.*;
 import com.form.footballform.models.request.PlayerRequest;
 import com.form.footballform.models.response.Response;
-import com.form.footballform.models.validator.impl.PlayerRequestValidator;
+import com.form.footballform.models.validator.PlayerRequestValidator;
 import com.form.footballform.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,12 @@ import java.util.Optional;
 @RequestMapping(path = "api/v1/football")
 public class FootballController {
     private final PlayerService playerService;
+    private final PlayerRequestValidator validator;
 
-    public FootballController(PlayerService playerService) {
+    @Autowired
+    public FootballController(PlayerService playerService, PlayerRequestValidator validator) {
         this.playerService = playerService;
+        this.validator = validator;
     }
 
     @GetMapping("{userid}")
@@ -54,23 +58,37 @@ public class FootballController {
     }
 
     @PostMapping
-    public ResponseEntity<Response<Player>> savePlayer(@RequestBody PlayerRequest playerRequest) {
-        PlayerRequestValidator requestValidator = new PlayerRequestValidator(playerRequest);
+    public ResponseEntity<Response<Player>> savePlayer(@RequestBody final PlayerRequest request) {
 
-        if (!requestValidator.isValid()) {
+        validator.setPlayerRequest(request);
+        if(validator.isUserNameAlreadyRegistered()) {
             Response<Player> response = new Response.ResponseBuilder<Player>()
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
-                    .setErrorMessage("Invalid form data")
+                    .setErrorMessage("Username is already registered")
                     .build();
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        Player playerFromRequest = playerService.getPlayer(playerRequest);
+        if(!validator.isValid()){
+            Response<Player> response = new Response.ResponseBuilder<Player>()
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Data is not valid")
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
 
-        Player savedPlayer = playerService.savePlayer(playerFromRequest);
+        Player savedPlayer = playerService.savePlayer(request);
+        if(savedPlayer == null) {
+            Response<Player> response = new Response.ResponseBuilder<Player>()
+                    .setHttpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .setErrorMessage("There was a problem in saving user data")
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         Response<Player> response = new Response.ResponseBuilder<Player>()
                 .setHttpStatusCode(HttpStatus.OK.value())
-                .setMessage("Player data saved")
+                .setMessage("Data saved successfully")
                 .setData(savedPlayer)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
