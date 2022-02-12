@@ -3,6 +3,7 @@ package com.form.footballform.service;
 import com.form.footballform.models.*;
 import com.form.footballform.models.request.PlayerRequest;
 import com.form.footballform.repository.PlayerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class PlayerService {
     private final TeamService teamService;
     private final PositionService positionService;
 
+    @Autowired
     public PlayerService(PlayerRepository playerRepository, CityService cityService, AddressService addressService, AgeGroupService ageGroupService, TeamService teamService, PositionService positionService) {
         this.playerRepository = playerRepository;
         this.cityService = cityService;
