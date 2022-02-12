@@ -40,8 +40,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     }
 
     public boolean isUserNameAlreadyRegistered() {
-        String userName = request.getUserName();
-        return isUsernameValid() && playerService.isUserNameAlreadyRegistered(userName);
+        return isUsernameValid() && playerService.isUserNameAlreadyRegistered(request.getUserName());
     }
 
     @Override
@@ -79,6 +78,10 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
         return !email.isEmpty() &&
                 email.length() < 255 &&
                 email.matches("^(.+)@(\\S+)$");
+    }
+
+    public boolean isEmailAlreadyTaken() {
+        return isEmailValid() && playerService.isEmailAlreadyTaken(request.getEmail());
     }
 
     @Override

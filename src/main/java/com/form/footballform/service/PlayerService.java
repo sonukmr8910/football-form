@@ -37,6 +37,10 @@ public class PlayerService {
         return playerRepository.existsByUserName(userName);
     }
 
+    public boolean isEmailAlreadyTaken(String email) {
+        return playerRepository.existsByEmail(email);
+    }
+
     public Player savePlayer(final PlayerRequest request) {
         try {
             AgeGroup ageGroup = ageGroupService.getAgeGroup(request.getAgeGroup()).orElseThrow();
@@ -46,7 +50,7 @@ public class PlayerService {
 
             List<Long> posIds = request.getDesiredPositions();
             List<Position> desiredPositions = new ArrayList<>();
-            for(Long posId : posIds) {
+            for (Long posId : posIds) {
                 Optional<Position> position = positionService.getPosition(posId);
                 position.ifPresent(desiredPositions::add);
             }
@@ -64,8 +68,7 @@ public class PlayerService {
             );
 
             return playerRepository.save(player);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

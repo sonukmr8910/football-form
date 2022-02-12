@@ -61,29 +61,35 @@ public class FootballController {
     public ResponseEntity<Response<Player>> savePlayer(@RequestBody final PlayerRequest request) {
 
         validator.setPlayerRequest(request);
-        if(validator.isUserNameAlreadyRegistered()) {
-            Response<Player> response = new Response.ResponseBuilder<Player>()
+        Response.ResponseBuilder<Player> responseBuilder = new Response.ResponseBuilder<>();
+
+        if (validator.isUserNameAlreadyRegistered()) {
+            responseBuilder
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
-                    .setErrorMessage("Username is already registered")
-                    .build();
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+                    .setErrorMessage("Username is already registered");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
         }
 
-        if(!validator.isValid()){
-            Response<Player> response = new Response.ResponseBuilder<Player>()
+        if(validator.isEmailAlreadyTaken()) {
+            responseBuilder
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
-                    .setErrorMessage("Data is not valid")
-                    .build();
-            return new ResponseEntity<>(response, HttpStatus.OK);
+                    .setErrorMessage("Email is already taken");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        if (!validator.isValid()) {
+            responseBuilder
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Data is not valid");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.OK);
         }
 
         Player savedPlayer = playerService.savePlayer(request);
-        if(savedPlayer == null) {
-            Response<Player> response = new Response.ResponseBuilder<Player>()
+        if (savedPlayer == null) {
+            responseBuilder
                     .setHttpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .setErrorMessage("There was a problem in saving user data")
-                    .build();
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                    .setErrorMessage("There was a problem in saving user data");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         Response<Player> response = new Response.ResponseBuilder<Player>()

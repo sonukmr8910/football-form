@@ -25,6 +25,8 @@ public class Player {
     private String firstName;
     private String lastName;
     private String phoneNumber;
+
+    @Column(unique = true)
     private String email;
 
     @ManyToOne
