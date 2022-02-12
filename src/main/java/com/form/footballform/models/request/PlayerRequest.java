@@ -8,23 +8,25 @@ public class PlayerRequest {
     private String lastName;
     private String phoneNumber;
     private String email;
+    private Long ageGroup;
     private String address;
     private Long city;
     private Long state;
     private Long country;
-    private int pinCode;
+    private Integer pinCode;
     private Long desiredTeam;
     private List<Long> desiredPositions;
 
     public PlayerRequest() {
     }
 
-    public PlayerRequest(String userName, String firstName, String lastName, String phoneNumber, String email, String address, Long city, Long state, Long country, int pinCode, Long desiredTeam, List<Long> desiredPositions) {
+    public PlayerRequest(String userName, String firstName, String lastName, String phoneNumber, String email, Long ageGroup, String address, Long city, Long state, Long country, Integer pinCode, Long desiredTeam, List<Long> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.ageGroup = ageGroup;
         this.address = address;
         this.city = city;
         this.state = state;
@@ -73,6 +75,10 @@ public class PlayerRequest {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Long getAgeGroup() {return ageGroup;}
+
+    public void setAgeGroup(Long ageGroup) { this.ageGroup = ageGroup;}
 
     public String getAddress() {
         return address;
@@ -132,16 +138,17 @@ public class PlayerRequest {
 
     @Override
     public String toString() {
-        return "FootballRequest{" +
+        return "PlayerRequest{" +
                 "userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
+                ", ageGroup=" + ageGroup +
                 ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", country='" + country + '\'' +
+                ", city=" + city +
+                ", state=" + state +
+                ", country=" + country +
                 ", pinCode=" + pinCode +
                 ", desiredTeam=" + desiredTeam +
                 ", desiredPositions=" + desiredPositions +
