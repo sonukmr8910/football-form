@@ -22,9 +22,12 @@ public class PlayerService {
         return playerRepository.getPlayerById(id);
     }
 
+    public boolean isUserNameAlreadyRegistered(String userName) {
+        return playerRepository.existsByUserName(userName);
+    }
+
     public Player savePlayer(Player player) {
-        return savePlayer(player.getId(), player.getUserName(), player.getFirstName(), player.getLastName(), player.getPhoneNumber(),
-                player.getEmail(), player.getAddress(), player.getDesiredTeam(), player.getDesiredPositions());
+        return playerRepository.save(player);
     }
 
     public Player savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, Address address, Team desiredTeam, List<Position> desiredPositions) {
