@@ -14,7 +14,7 @@ public class AgeGroupService {
         this.ageGroupRepository = ageGroupRepository;
     }
 
-    Optional<AgeGroup> getAgeGroup(Long id) {
+    public Optional<AgeGroup> getAgeGroup(Long id) {
         return ageGroupRepository.getAgeGroupById(id);
     }
 
