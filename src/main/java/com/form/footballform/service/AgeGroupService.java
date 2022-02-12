@@ -3,9 +3,11 @@ package com.form.footballform.service;
 import com.form.footballform.models.AgeGroup;
 import com.form.footballform.repository.AgeGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AgeGroupService {
     private final AgeGroupRepository ageGroupRepository;
 
