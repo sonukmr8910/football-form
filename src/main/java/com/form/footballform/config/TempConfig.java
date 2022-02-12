@@ -17,6 +17,7 @@ public class TempConfig {
             StateService stateService,
             CityService cityService,
             AddressService addressService,
+            AgeGroupService ageGroupService,
             TeamService teamService,
             PositionService positionService,
             PlayerService playerService) {
@@ -26,6 +27,7 @@ public class TempConfig {
             State state = stateService.saveState(new State("Punjab", country));
             City city = cityService.saveCity(new City("Mohali", state));
             Address address = addressService.saveAddress(new Address("Phase 1", city, 110011));
+            AgeGroup ageGroup = ageGroupService.saveAgeGroup(new AgeGroup("25-30"));
 
             Team desiredTeam = teamService.saveTeam(new Team("Barcelona"));
             List<Position> desiredPosition = List.of(
@@ -39,6 +41,7 @@ public class TempConfig {
                     "Kumar",
                     "9898989898",
                     "sonu@gmail.com",
+                    ageGroup,
                     address,
                     desiredTeam,
                     desiredPosition
