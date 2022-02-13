@@ -5,6 +5,7 @@ import com.form.footballform.repository.AgeGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,10 @@ public class AgeGroupService {
 
     public Optional<AgeGroup> getAgeGroup(Long id) {
         return ageGroupRepository.getAgeGroupById(id);
+    }
+
+    public List<AgeGroup> getAllAgeGroups() {
+        return ageGroupRepository.findAll();
     }
 
     public AgeGroup saveAgeGroup(Long id, String name) {
