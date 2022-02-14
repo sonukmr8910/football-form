@@ -24,6 +24,7 @@ public class FootballController {
         this.validator = validator;
     }
 
+    @CrossOrigin
     @GetMapping("{userid}")
     public ResponseEntity<Response<Player>> getPlayer(@PathVariable("userid") String userid) {
         Long id;
@@ -57,6 +58,7 @@ public class FootballController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @PostMapping
     public ResponseEntity<Response<Player>> savePlayer(@RequestBody final PlayerRequest request) {
 
@@ -78,12 +80,14 @@ public class FootballController {
         }
 
         if (!validator.isValid()) {
+            System.out.println("Data is not valid");
+            System.out.println(request);
             responseBuilder
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
                     .setErrorMessage("Data is not valid");
             return new ResponseEntity<>(responseBuilder.build(), HttpStatus.OK);
         }
-
+        System.out.println("Reach");
         Player savedPlayer = playerService.savePlayer(request);
         if (savedPlayer == null) {
             responseBuilder
