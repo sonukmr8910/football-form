@@ -37,7 +37,7 @@ const collectFormDetails = () => ({
     city: city.value,
     state: state.value,
     country: country.value,
-    pincode: pinCode.value,
+    pinCode: pinCode.value,
 	desiredTeam: getSelectedTeam(),
 	desiredPosition: getSelectedPositions(),
 });
