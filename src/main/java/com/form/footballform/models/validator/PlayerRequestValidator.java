@@ -15,16 +15,18 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     private final CityService cityService;
     private final StateService stateService;
     private final CountryService countryService;
+    private final CountryCodeService countryCodeService;
     private final AgeGroupService ageGroupService;
     private final TeamService teamService;
     private final PositionService positionService;
 
     @Autowired
-    public PlayerRequestValidator(PlayerService playerService, CityService cityService, StateService stateService, CountryService countryService, AgeGroupService ageGroupService, TeamService teamService, PositionService positionService) {
+    public PlayerRequestValidator(PlayerService playerService, CityService cityService, StateService stateService, CountryService countryService, CountryCodeService countryCodeService, AgeGroupService ageGroupService, TeamService teamService, PositionService positionService) {
         this.playerService = playerService;
         this.cityService = cityService;
         this.stateService = stateService;
         this.countryService = countryService;
+        this.countryCodeService = countryCodeService;
         this.ageGroupService = ageGroupService;
         this.teamService = teamService;
         this.positionService = positionService;
@@ -32,6 +34,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
 
     @Override
     public boolean isUsernameValid() {
+        System.out.println("checking username");
         if (request.getUserName() == null) return false;
         String userName = request.getUserName().trim();
         return !userName.isEmpty() &&
@@ -40,11 +43,13 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     }
 
     public boolean isUserNameAlreadyRegistered() {
+        System.out.println("checking username existence");
         return isUsernameValid() && playerService.isUserNameAlreadyRegistered(request.getUserName());
     }
 
     @Override
     public boolean isFirstNameValid() {
+        System.out.println("checking first name");
         if (request.getFirstName() == null) return false;
         String firstName = request.getFirstName().trim();
         return !firstName.isEmpty() &&
@@ -54,6 +59,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
 
     @Override
     public boolean isLastNameValid() {
+        System.out.println("checking last name");
         if (request.getLastName() == null) return false;
         String lastName = request.getLastName().trim();
         return !lastName.isEmpty() &&
@@ -62,7 +68,15 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     }
 
     @Override
+    public boolean isCountryCodeValid() {
+        System.out.println("checking country code");
+        if(request.getCountryCode() == null) return false;
+        return countryCodeService.getCountryCode(request.getCountryCode()).isPresent();
+    }
+
+    @Override
     public boolean isPhoneNumberValid() {
+        System.out.println("checking phone number");
         if (request.getPhoneNumber() == null) return false;
         String phoneNumber = request.getPhoneNumber();
         System.out.println(phoneNumber);
@@ -73,6 +87,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
 
     @Override
     public boolean isEmailValid() {
+        System.out.println("checking email validation");
         if (request.getEmail() == null) return false;
         String email = request.getEmail();
         return !email.isEmpty() &&
@@ -81,17 +96,20 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     }
 
     public boolean isEmailAlreadyTaken() {
+        System.out.println("checking email existence");
         return isEmailValid() && playerService.isEmailAlreadyTaken(request.getEmail());
     }
 
     @Override
     public boolean isAgeGroupValid() {
+        System.out.println("checking age group");
         if(request.getAgeGroup() == null) return false;
         return ageGroupService.getAgeGroup(request.getAgeGroup()).isPresent();
     }
 
     @Override
     public boolean isAddressValid() {
+        System.out.println("checking address");
         if (request.getAddress() == null) return false;
         String addr = request.getAddress();
         return !addr.isEmpty() &&
@@ -101,40 +119,47 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
 
     @Override
     public boolean isCompleteAddressValid() {
+        System.out.println("checking complete address");
         return isCountryValid() && isStateValid() && isCityValid();
     }
 
     @Override
     public boolean isCityValid() {
+        System.out.println("checking city");
         if (request.getCity() == null) return false;
         return cityService.getCity(request.getCity()).isPresent();
     }
 
     @Override
     public boolean isStateValid() {
+        System.out.println("checking state");
         if (request.getState() == null) return false;
         return stateService.getState(request.getState()).isPresent();
     }
 
     @Override
     public boolean isCountryValid() {
+        System.out.println("checking country");
         if (request.getCountry() == null) return false;
         return countryService.getCountry(request.getCountry()).isPresent();
     }
 
     @Override
     public boolean isPinCodeValid() {
+        System.out.println("checking pincode");
         return request.getPinCode() >= 100000 || request.getPinCode() <= 999999;
     }
 
     @Override
     public boolean isDesiredTeamValid() {
+        System.out.println("checking desired team");
         if (request.getDesiredTeam() == null) return false;
         return teamService.getTeam(request.getDesiredTeam()).isPresent();
     }
 
     @Override
     public boolean isDesiredPositionValid() {
+        System.out.println("checking desired positions");
         List<Long> desiredPositions = request.getDesiredPositions();
         if (desiredPositions == null || desiredPositions.isEmpty()) return false;
         for (Long id : desiredPositions) {
@@ -155,6 +180,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
                 isFirstNameValid() &&
                 isLastNameValid() &&
                 isEmailValid() &&
+                isCountryCodeValid() &&
                 isPhoneNumberValid() &&
                 isAgeGroupValid() &&
                 isAddressValid() &&

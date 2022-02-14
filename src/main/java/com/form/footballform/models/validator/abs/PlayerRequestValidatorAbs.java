@@ -10,6 +10,8 @@ public abstract class PlayerRequestValidatorAbs implements RequestValidator {
 
     public abstract boolean isLastNameValid();
 
+    public abstract boolean isCountryCodeValid();
+
     public abstract boolean isPhoneNumberValid();
 
     public abstract boolean isEmailValid();
