@@ -39,7 +39,7 @@ const collectFormDetails = () => ({
     country: country.value,
     pinCode: pinCode.value,
 	desiredTeam: getSelectedTeam(),
-	desiredPosition: getSelectedPositions(),
+	desiredPositions: getSelectedPositions(),
 });
 
 
