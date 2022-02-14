@@ -24,6 +24,11 @@ public class Player {
 
     private String firstName;
     private String lastName;
+
+    @ManyToOne
+    @JoinColumn(name = "country_code_id")
+    private CountryCode countryCode;
+
     private String phoneNumber;
 
     @Column(unique = true)
@@ -44,14 +49,19 @@ public class Player {
     @Convert(converter = StringPositionConverter.class)
     private List<Position> desiredPositions;
 
+    public CountryCode getCountryCode() {
+        return countryCode;
+    }
+
     public Player() {
     }
 
-    public Player(Long id, String userName, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player(Long id, String userName, String firstName, String lastName, CountryCode countryCode, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.countryCode = countryCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.ageGroup = ageGroup;
@@ -60,10 +70,11 @@ public class Player {
         this.desiredPositions = desiredPositions;
     }
 
-    public Player(String userName, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+    public Player(String userName, String firstName, String lastName, CountryCode countryCode, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.countryCode = countryCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.ageGroup = ageGroup;
@@ -104,6 +115,10 @@ public class Player {
         this.lastName = lastName;
     }
 
+    public void setCountryCode(CountryCode countryCode) {
+        this.countryCode = countryCode;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -116,16 +131,16 @@ public class Player {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public AgeGroup getAgeGroup() {
         return ageGroup;
     }
 
     public void setAgeGroup(AgeGroup ageGroup) {
         this.ageGroup = ageGroup;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Address getAddress() {
@@ -159,6 +174,7 @@ public class Player {
                 ", userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", countryCode=" + countryCode +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", ageGroup=" + ageGroup +

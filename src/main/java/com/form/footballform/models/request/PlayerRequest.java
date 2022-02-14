@@ -6,6 +6,7 @@ public class PlayerRequest {
     private String userName;
     private String firstName;
     private String lastName;
+    private Long countryCode;
     private String phoneNumber;
     private String email;
     private Long ageGroup;
@@ -20,10 +21,11 @@ public class PlayerRequest {
     public PlayerRequest() {
     }
 
-    public PlayerRequest(String userName, String firstName, String lastName, String phoneNumber, String email, Long ageGroup, String address, Long city, Long state, Long country, Integer pinCode, Long desiredTeam, List<Long> desiredPositions) {
+    public PlayerRequest(String userName, String firstName, String lastName, Long countryCode, String phoneNumber, String email, Long ageGroup, String address, Long city, Long state, Long country, Integer pinCode, Long desiredTeam, List<Long> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.countryCode = countryCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.ageGroup = ageGroup;
@@ -60,6 +62,14 @@ public class PlayerRequest {
         this.lastName = lastName;
     }
 
+    public Long getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(Long countryCode) {
+        this.countryCode = countryCode;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -76,9 +86,13 @@ public class PlayerRequest {
         this.email = email;
     }
 
-    public Long getAgeGroup() {return ageGroup;}
+    public Long getAgeGroup() {
+        return ageGroup;
+    }
 
-    public void setAgeGroup(Long ageGroup) { this.ageGroup = ageGroup;}
+    public void setAgeGroup(Long ageGroup) {
+        this.ageGroup = ageGroup;
+    }
 
     public String getAddress() {
         return address;
@@ -112,11 +126,11 @@ public class PlayerRequest {
         this.country = country;
     }
 
-    public int getPinCode() {
+    public Integer getPinCode() {
         return pinCode;
     }
 
-    public void setPinCode(int pinCode) {
+    public void setPinCode(Integer pinCode) {
         this.pinCode = pinCode;
     }
 
@@ -142,6 +156,7 @@ public class PlayerRequest {
                 "userName='" + userName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", countryCode=" + countryCode +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", ageGroup=" + ageGroup +

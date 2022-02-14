@@ -13,6 +13,7 @@ import java.util.Optional;
 @Service
 public class PlayerService {
     private final PlayerRepository playerRepository;
+    private final CountryCodeService countryCodeService;
     private final CityService cityService;
     private final AddressService addressService;
     private final AgeGroupService ageGroupService;
@@ -20,8 +21,9 @@ public class PlayerService {
     private final PositionService positionService;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository, CityService cityService, AddressService addressService, AgeGroupService ageGroupService, TeamService teamService, PositionService positionService) {
+    public PlayerService(PlayerRepository playerRepository, CountryCodeService countryCodeService, CityService cityService, AddressService addressService, AgeGroupService ageGroupService, TeamService teamService, PositionService positionService) {
         this.playerRepository = playerRepository;
+        this.countryCodeService = countryCodeService;
         this.cityService = cityService;
         this.addressService = addressService;
         this.ageGroupService = ageGroupService;
@@ -43,6 +45,7 @@ public class PlayerService {
 
     public Player savePlayer(final PlayerRequest request) {
         try {
+            CountryCode countryCode = countryCodeService.getCountryCode(request.getCountryCode()).orElseThrow();
             AgeGroup ageGroup = ageGroupService.getAgeGroup(request.getAgeGroup()).orElseThrow();
             City city = cityService.getCity(request.getCity()).orElseThrow();
             Address address = addressService.saveAddress(new Address(request.getAddress(), city, request.getPinCode()));
@@ -59,6 +62,7 @@ public class PlayerService {
                     request.getUserName(),
                     request.getFirstName(),
                     request.getLastName(),
+                    countryCode,
                     request.getPhoneNumber(),
                     request.getEmail(),
                     ageGroup,
@@ -77,12 +81,12 @@ public class PlayerService {
         return playerRepository.save(player);
     }
 
-    public Player savePlayer(Long id, String username, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
-        Player player = new Player(id, username, firstName, lastName, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
+    public Player savePlayer(Long id, String username, String firstName, String lastName, CountryCode countryCode, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+        Player player = new Player(id, username, firstName, lastName, countryCode, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
         return playerRepository.save(player);
     }
 
-    public Player savePlayer(String username, String firstName, String lastName, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
-        return savePlayer(null, username, firstName, lastName, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
+    public Player savePlayer(String username, String firstName, String lastName, CountryCode countryCode, String phoneNumber, String email, AgeGroup ageGroup, Address address, Team desiredTeam, List<Position> desiredPositions) {
+        return savePlayer(null, username, firstName, lastName, countryCode, phoneNumber, email, ageGroup, address, desiredTeam, desiredPositions);
     }
 }
