@@ -1,0 +1,35 @@
+body {
+  color: #888;
+  font-weight: 600;
+}
+
+.main {
+  background-color: rgb(226, 238, 244);
+}
+
+.title {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 500;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cell {
+  padding: 20px;
+}
+
+input,
+input::-webkit-input-placeholder {
+  font-weight: 500;
+}
+
+.submit-btn {
+  background-color: rgb(143, 188, 95);
+}
+
+#country-code {
+  max-width: 80px;
+}
