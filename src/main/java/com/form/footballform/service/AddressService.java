@@ -33,4 +33,13 @@ public class AddressService {
     public Address saveAddress(String address, City city, int pinCode) {
         return saveAddress(null, address, city, pinCode);
     }
+
+    public void deleteAddress(Address address) {
+        try {
+            addressRepository.delete(address);
+        }
+        catch (Exception e) {
+            // Address could not be deleted
+        }
+    }
 }
