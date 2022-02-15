@@ -25,25 +25,22 @@ public class FootballController {
     }
 
     @CrossOrigin
-    @GetMapping("{userid}")
-    public ResponseEntity<Response<Player>> getPlayer(@PathVariable("userid") String userid) {
-        Long id;
+    @GetMapping("/user/{username}")
+    public ResponseEntity<Response<Player>> getPlayer(@PathVariable("username") String userName) {
         final Response<Player> response;
 
-        try {
-            id = Long.parseLong(userid);
-        } catch (NumberFormatException e) {
+        if(userName == null || userName.length() == 0) {
             response = new Response.ResponseBuilder<Player>()
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
-                    .setErrorMessage("Invalid User Id")
+                    .setErrorMessage("Username cannot be empty")
                     .build();
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
-        final Optional<Player> player = playerService.getPlayer(id);
+        final Optional<Player> player = playerService.getPlayer(userName);
 
         if (player.isEmpty()) {
-            String errorMessage = String.format("User with id %d not found", id);
+            String errorMessage = String.format("User with username %s not found", userName);
             response = new Response.ResponseBuilder<Player>()
                     .setHttpStatusCode(HttpStatus.NOT_FOUND.value())
                     .setErrorMessage(errorMessage)
@@ -54,6 +51,28 @@ public class FootballController {
         response = new Response.ResponseBuilder<Player>()
                 .setHttpStatusCode(HttpStatus.OK.value())
                 .setData(player.get())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/exists/{username}")
+    public ResponseEntity<Response<Player>> existsPlayer(@PathVariable("username") String userName) {
+        final Response<Player> response;
+
+        if(userName == null || userName.length() == 0) {
+            response = new Response.ResponseBuilder<Player>()
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Username cannot be empty")
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        final boolean existence = playerService.isUserNameAlreadyRegistered(userName);
+
+        response = new Response.ResponseBuilder<Player>()
+                .setHttpStatusCode(HttpStatus.OK.value())
+                .setMessage(String.valueOf(existence))
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
