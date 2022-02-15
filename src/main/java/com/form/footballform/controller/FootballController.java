@@ -87,6 +87,7 @@ public class FootballController {
                     .setErrorMessage("Data is not valid");
             return new ResponseEntity<>(responseBuilder.build(), HttpStatus.OK);
         }
+
         System.out.println("Reach");
         Player savedPlayer = playerService.savePlayer(request);
         if (savedPlayer == null) {
@@ -102,5 +103,50 @@ public class FootballController {
                 .setData(savedPlayer)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping
+    public ResponseEntity<Response<Player>> updatePlayer(@RequestBody final PlayerRequest request) {
+        validator.setPlayerRequest(request);
+        Response.ResponseBuilder<Player> responseBuilder = new Response.ResponseBuilder<>();
+
+        if (!validator.isValid()) {
+            System.out.println("Data is not valid");
+            System.out.println(request);
+            responseBuilder
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Data is not valid");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        if(!validator.isUserNameAlreadyRegistered()) {
+            responseBuilder
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Cannot find user: " + request.getUserName());
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Player> player = playerService.getPlayer(request.getUserName());
+
+        if(player.isEmpty()) {
+            responseBuilder
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Cannot find user: " + request.getUserName());
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        Player updatedPlayer = playerService.updatePlayer(player.get(), request);
+        if(updatedPlayer == null) {
+            responseBuilder
+                    .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
+                    .setErrorMessage("Cannot save user data");
+            return new ResponseEntity<>(responseBuilder.build(), HttpStatus.BAD_REQUEST);
+        }
+
+        responseBuilder
+                .setHttpStatusCode(HttpStatus.OK.value())
+                .setMessage("User data saved!");
+        return new ResponseEntity<>(responseBuilder.build(), HttpStatus.OK);
     }
 }
