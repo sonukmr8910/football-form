@@ -1,3 +1,5 @@
+var isNewRecord = true;
+
 document.addEventListener('DOMContentLoaded', () => {
 	//Filling Country Codes
 	fetch('http://localhost:8080/api/v1/countrycode', {
@@ -6,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			if (data.httpStatusCode != 200) throw new Error('There was an error in fetching country codes')
+			if (data.httpStatusCode != 200) throw new Error('Cannot fetch country codes');
 
 			data.data
 				.map((countryCode) => {
@@ -41,6 +43,40 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log("Cannot fetch using countries endpoint")
 		});
 
+		fillAllCountries(null);
+});
+
+var searchBtn = document.getElementById('search-btn');
+var userNameField = document.getElementById('username');
+userNameField.addEventListener('keyup', () => {
+	btnSubmit.innerText = "Phewww! Let's submit it";
+	isNewRecord = true;
+
+	fetch('http://localhost:8080/api/v1/football/exists/' + userNameField.value.trim(), {
+		method: 'GET',
+		redirect: 'follow'
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.httpStatusCode != 200) throw new Error(data.httpStatusCode)
+			if(data.message == "true"){
+				searchBtn.classList.remove('btn-outline-secondary')
+				searchBtn.classList.add('btn-success');
+				searchBtn.classList.add('text-light');
+			}
+			else{
+				searchBtn.classList.add('btn-outline-secondary')
+				searchBtn.classList.remove('btn-success');
+				searchBtn.classList.remove('text-light');
+			}
+		})
+		.catch(err => {
+			console.log("There was an error in fetching cities");
+		});
+});
+
+const fillAllCountries = (initialValue) => {
+	removeOptions(countrySelectElement);
 	//Filling Countries
 	fetch('http://localhost:8080/api/v1/country', {
 		method: 'GET',
@@ -56,14 +92,66 @@ document.addEventListener('DOMContentLoaded', () => {
 					optCountry.innerText = country.name;
 					optCountry.setAttribute('value', country.id)
 					countrySelectElement.append(optCountry);
-				});
+			});
+			if(initialValue != null)
+				countrySelectElement.value = initialValue;
 			countrySelectElement.dispatchEvent(new Event('change'));
 		})
 		.catch((error) => {
 			console.log("Cannot fetch using countries endpoint")
 		});
-});
+};
 
+searchBtn.addEventListener('click', () => {
+	if(searchBtn.classList.contains('btn-success')) {
+
+		fetch('http://localhost:8080/api/v1/football/user/' + userNameField.value.trim(), {
+			method: 'GET',
+			redirect: 'follow'
+		})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data.httpStatusCode != 200) throw new Error(data.httpStatusCode)
+			var player = data.data;
+			firstName.value = player.firstName;
+			lastName.value = player.lastName;
+			phoneNumber.value = player.phoneNumber;
+			email.value = player.email;
+			ageGroup.selectedIndex = player.ageGroup;
+			address.value = player.address.address;
+			pinCode.value = player.address.pinCode;
+			var desiredteamNames = Array.from(document.getElementsByName('desired-team'));
+			desiredteamNames.map((ele) => {
+				if(ele.value == player.desiredTeam.id)
+					ele.checked = true;
+			});
+
+			var desiredPositionNames = Array.from(document.getElementsByName('desired-position'));
+			desiredPositionNames.map((ele) => {
+				ele.checked = false;
+				player.desiredPositions.forEach((p) => {
+					if(p.id == ele.value)
+						ele.checked = true;
+				});
+			});
+
+			fillAllCountries(player.address.city.state.country.id);
+			state.value = player.address.city.state.id;
+			state.dispatchEvent(new Event('change'));
+			city.value = player.address.city.id;
+			btnSubmit.innerText = "Update User Data";
+			isNewRecord = false;
+		})
+		.catch(err => {
+			console.log("Cannot fetch user data");
+			console.log(err);
+		});
+	}
+	else {
+		btnSubmit.innerText = "Phewww! Let's submit it";
+		isNewRecord = true;
+	}
+});
 
 countrySelectElement.addEventListener('change', () => {
 	removeOptions(stateSelectElement);
@@ -109,4 +197,14 @@ stateSelectElement.addEventListener('change', () => {
 		.catch(err => {
 			console.log("There was an error in fetching cities");
 		});
+});
+
+
+btnSubmit.addEventListener('click', () => {    
+	const formData = collectFormDetails();
+
+	if(isNewRecord)
+		registerUser(formData, 'POST');
+	else
+		registerUser(formData, 'PUT');
 });

@@ -43,16 +43,9 @@ const collectFormDetails = () => ({
 });
 
 
-btnSubmit.addEventListener('click', () => {    
-    console.log("Submit clicked");
-    const formData = collectFormDetails();
-	console.log(formData);
-    registerUser(formData);
-});
-
-const registerUser = (formData) => {
+const registerUser = (formData, requestType) => {
 	fetch('http://localhost:8080/api/v1/football', {
-		method: 'POST',
+		method: requestType,
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -61,7 +54,7 @@ const registerUser = (formData) => {
 		.then((response) => response.json())
 		.then((data) => {
 			if (data.httpStatusCode === 200) console.log("Data saved successfully")
-			else console.log("There wa an error in saving data")
+			else console.log(data.errorMessage)
 		})
 		.catch((error) => {
 			console.log("Something went wrong: " + error)
