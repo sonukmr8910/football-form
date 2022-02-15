@@ -24,10 +24,26 @@ public class TempConfig {
             PlayerService playerService) {
 
         return args -> {
+
+            //Initialization
             Country country = countryService.saveCountry(new Country("India"));
+            countryService.saveCountry(new Country("Sri Lanka"));
+            countryService.saveCountry(new Country("Australia"));
+            countryService.saveCountry(new Country("Afghanistan"));
+            countryService.saveCountry(new Country("China"));
+
             CountryCode countryCode = countryCodeService.saveCountryCode(new CountryCode("+91", country));
             State state = stateService.saveState(new State("Punjab", country));
+
+            stateService.saveState(new State("Haryana", country));
+            stateService.saveState(new State("Uttarakhand", country));
+            stateService.saveState(new State("Mumbai", country));
+
             City city = cityService.saveCity(new City("Mohali", state));
+
+            cityService.saveCity(new City("Kharar", state));
+            cityService.saveCity(new City("Sector 120", state));
+
             Address address = addressService.saveAddress(new Address("Phase 1", city, 110011));
             AgeGroup ageGroup = ageGroupService.saveAgeGroup(new AgeGroup("25-30"));
 
