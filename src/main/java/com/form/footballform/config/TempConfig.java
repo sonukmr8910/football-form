@@ -44,7 +44,7 @@ public class TempConfig {
             );
 
             Player player = new Player(
-                    "sonukmr8910",
+                    "sonu",
                     "Sonu",
                     "Kumar",
                     countryCode,
