@@ -114,7 +114,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
         String addr = request.getAddress();
         return !addr.isEmpty() &&
                 addr.length() < 255 &&
-                addr.matches("[A-Za-z0-9 #]+");
+                addr.matches("[A-Za-z0-9 #\\r\\n]+");
     }
 
     @Override
