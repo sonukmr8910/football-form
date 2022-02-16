@@ -219,7 +219,7 @@ countrySelectElement.addEventListener('change', () => {
 	removeOptions(stateSelectElement);
 	removeOptions(citySelectElement);
 
-	fillAllStates(true);
+	fillAllStates(null, true);
 });
 
 
@@ -237,7 +237,8 @@ const fillAllStates = (initialValue, callEvent) => {
 				optState.setAttribute('value', state.id);
 				stateSelectElement.append(optState);
 			});
-			stateSelectElement.value = initialValue;
+			if(initialValue)
+				stateSelectElement.value = initialValue;
 			if(callEvent)
 				stateSelectElement.dispatchEvent(new Event('change'));
 		})
@@ -246,7 +247,7 @@ const fillAllStates = (initialValue, callEvent) => {
 		});
 }
 
-const fillAllCities = (initialValue) => {
+const fillAllCities = (initialValue, callEvent) => {
 	fetch('http://localhost:8080/api/v1/cities/' + stateSelectElement.options[stateSelectElement.selectedIndex].value, {
 		method: 'GET',
 		redirect: 'follow'
@@ -262,6 +263,8 @@ const fillAllCities = (initialValue) => {
 			});
 			if(initialValue)
 				citySelectElement.value = initialValue;
+			if(callEvent)
+				citySelectElement.dispatchEvent(new Event('change'));
 		})
 		.catch(err => {
 			console.log("There was an error in fetching cities");
@@ -271,7 +274,7 @@ const fillAllCities = (initialValue) => {
 stateSelectElement.addEventListener('change', () => {
 	removeOptions(citySelectElement);
 
-	fillAllStates(null, true);	
+	fillAllCities(null, false);	
 });
 
 
