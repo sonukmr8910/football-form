@@ -67,26 +67,28 @@ These are the requirements that needs to be fulfilled beforehand in order to run
 
 ### Installation
 The following steps guide you to running up the server.
-<ol>
-    <li>Get the project files</li>
-    `https://github.com/sonukmr8910/football-form`
-    <li>Get in to the project directory called `football-form`</li>
-    <li>Run the project either using the IDE or using the command-line</li>
-    `gradlew bootRun`
-    <li>Goto `http://localhost:8080` in your browsers</li>
-</ol>
+1.  Get the project files
+```
+https://github.com/sonukmr8910/football-form
+```
+2. Get in to the project directory called `football-form`.
+3. Run the project either using the IDE or using the command-line.
+```shell
+gradlew bootRun
+```
+4. Goto `http://localhost:8080` in your browsers.
 
 ## Roadmap
-[] Frontend
-    [x] Basic Structure
-    [x] Applied CSS Design
-    [x] Connect to Server
-    [] Client-side validations
-    [] Optimizations
-[x] Backend
-    [x] Setting REST endpoints
-    [x] Creating Basic Entities and DAO 
-    [x] Server side validations
+- [ ] Frontend
+    - [x] Basic Structure
+    - [x] Applied CSS Design
+    - [x] Connect to Server
+    - [ ] Client-side validations
+    - [ ] Optimizations
+- [x] Backend
+    - [x] Setting REST endpoints
+    - [x] Creating Basic Entities and DAO 
+    - [x] Server side validations
 
 ## Contributing
 Contributions are always appreciated. If you have suggestions to make this better, then please create a pull request. Thank You!
@@ -106,8 +108,6 @@ Sonu Kumar K
 ## Acknowledgements
 Resources that helped in the journey.
 
-<ul>
-    <li>[Shields](https://shields.io)</li>
-    <li>[Bootstrap](https://getbootstrap.com)</li>
-    <li>[Postman](https://www.postman.com)</li>
-</ul>
+- [Shields](https://shields.io)
+- [Bootstrap](https://getbootstrap.com)
+- [Postman](https://www.postman.com)
