@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log("Cannot fetch using countries endpoint")
 		});
 
-		fillAllCountries(null);
+		fillAllCountries(null, true);
 });
 
 var searchBtn = document.getElementById('search-btn');
@@ -75,7 +75,7 @@ userNameField.addEventListener('keyup', () => {
 		});
 });
 
-const fillAllCountries = (initialValue) => {
+const fillAllCountries = (initialValue, callEvent) => {
 	removeOptions(countrySelectElement);
 	//Filling Countries
 	fetch('http://localhost:8080/api/v1/country', {
@@ -93,9 +93,10 @@ const fillAllCountries = (initialValue) => {
 					optCountry.setAttribute('value', country.id)
 					countrySelectElement.append(optCountry);
 			});
-			if(initialValue != null)
+			if(initialValue)
 				countrySelectElement.value = initialValue;
-			countrySelectElement.dispatchEvent(new Event('change'));
+			if(callEvent)
+				countrySelectElement.dispatchEvent(new Event('change'));
 		})
 		.catch((error) => {
 			console.log("Cannot fetch using countries endpoint")
@@ -135,10 +136,71 @@ searchBtn.addEventListener('click', () => {
 				});
 			});
 
-			fillAllCountries(player.address.city.state.country.id);
-			state.value = player.address.city.state.id;
-			state.dispatchEvent(new Event('change'));
-			city.value = player.address.city.id;
+			removeOptions(countrySelectElement);
+			//Filling Countries
+			fetch('http://localhost:8080/api/v1/country', {
+				method: 'GET',
+				redirect: 'follow',
+			})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.httpStatusCode != 200) throw new Error('There was an error in fetching country codes')
+
+				data.data
+					.map((country) => {
+						const optCountry = document.createElement('option')
+						optCountry.innerText = country.name;
+						optCountry.setAttribute('value', country.id)
+						countrySelectElement.append(optCountry);
+					});
+					countryCodeSelectElement.value = player.address.city.state.country.id;
+
+					// Filling States
+					removeOptions(stateSelectElement);
+					removeOptions(citySelectElement);
+					fetch('http://localhost:8080/api/v1/states/' + countrySelectElement.options[countrySelectElement.selectedIndex].value, {
+						method: 'GET',
+						redirect: 'follow'
+					})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.httpStatusCode != 200) throw new Error('There was an error in fetching states')
+						data.data.map((state) => {
+						const optState = document.createElement('option');
+						optState.innerText = state.name;
+						optState.setAttribute('value', state.id);
+						stateSelectElement.append(optState);
+						});
+						stateSelectElement.value = player.address.city.state.id;
+						
+						//Filling Cities
+						fetch('http://localhost:8080/api/v1/cities/' + stateSelectElement.options[stateSelectElement.selectedIndex].value, {
+							method: 'GET',
+							redirect: 'follow'
+						})
+						.then((response) => response.json())
+						.then((data) => {
+							if (data.httpStatusCode != 200) throw new Error('There was an error in fetching cities api')
+							data.data.map((city) => {
+								const optCity = document.createElement('option');
+								optCity.innerText = city.name;
+								optCity.setAttribute('value', city.id);
+								citySelectElement.append(optCity);
+							});
+
+						})
+						.catch(err => {
+							console.log("There was an error in fetching cities");
+						});
+					})
+					.catch(err => {
+						console.log("There was an error in fetching states");
+					});
+				})
+				.catch((error) => {
+					console.log("Cannot fetch using countries endpoint")
+				});
+			
 			btnSubmit.innerText = "Update User Data";
 			isNewRecord = false;
 		})
@@ -157,6 +219,11 @@ countrySelectElement.addEventListener('change', () => {
 	removeOptions(stateSelectElement);
 	removeOptions(citySelectElement);
 
+	fillAllStates(true);
+});
+
+
+const fillAllStates = (initialValue, callEvent) => {
 	fetch('http://localhost:8080/api/v1/states/' + countrySelectElement.options[countrySelectElement.selectedIndex].value, {
 		method: 'GET',
 		redirect: 'follow'
@@ -170,16 +237,16 @@ countrySelectElement.addEventListener('change', () => {
 				optState.setAttribute('value', state.id);
 				stateSelectElement.append(optState);
 			});
-			stateSelectElement.dispatchEvent(new Event('change'));
+			stateSelectElement.value = initialValue;
+			if(callEvent)
+				stateSelectElement.dispatchEvent(new Event('change'));
 		})
 		.catch(err => {
 			console.log("There was an error in fetching states");
 		});
-});
+}
 
-stateSelectElement.addEventListener('change', () => {
-	removeOptions(citySelectElement);
-
+const fillAllCities = (initialValue) => {
 	fetch('http://localhost:8080/api/v1/cities/' + stateSelectElement.options[stateSelectElement.selectedIndex].value, {
 		method: 'GET',
 		redirect: 'follow'
@@ -193,10 +260,18 @@ stateSelectElement.addEventListener('change', () => {
 				optCity.setAttribute('value', city.id);
 				citySelectElement.append(optCity);
 			});
+			if(initialValue)
+				citySelectElement.value = initialValue;
 		})
 		.catch(err => {
 			console.log("There was an error in fetching cities");
 		});
+}
+
+stateSelectElement.addEventListener('change', () => {
+	removeOptions(citySelectElement);
+
+	fillAllStates(null, true);	
 });
 
 
