@@ -22,19 +22,19 @@ public class Address {
     @JoinColumn(name = "city_id")
     private City city;
 
-    private int pinCode;
+    private String pinCode;
 
     public Address() {
     }
 
-    public Address(Long id, String address, City city, int pinCode) {
+    public Address(Long id, String address, City city, String pinCode) {
         this.id = id;
         this.address = address;
         this.city = city;
         this.pinCode = pinCode;
     }
 
-    public Address(String address, City city, int pinCode) {
+    public Address(String address, City city, String pinCode) {
         this.address = address;
         this.city = city;
         this.pinCode = pinCode;
@@ -64,11 +64,11 @@ public class Address {
         this.city = city;
     }
 
-    public int getPinCode() {
+    public String getPinCode() {
         return pinCode;
     }
 
-    public void setPinCode(int pinCode) {
+    public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
 

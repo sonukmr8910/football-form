@@ -61,6 +61,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     public boolean isLastNameValid() {
         System.out.println("checking last name");
         if (request.getLastName() == null) return false;
+        if (request.getLastName().length() == 0) return true;
         String lastName = request.getLastName().trim();
         return !lastName.isEmpty() &&
                 lastName.length() < 255 &&
@@ -70,7 +71,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     @Override
     public boolean isCountryCodeValid() {
         System.out.println("checking country code");
-        if(request.getCountryCode() == null) return false;
+        if (request.getCountryCode() == null) return false;
         return countryCodeService.getCountryCode(request.getCountryCode()).isPresent();
     }
 
@@ -103,7 +104,7 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     @Override
     public boolean isAgeGroupValid() {
         System.out.println("checking age group");
-        if(request.getAgeGroup() == null) return false;
+        if (request.getAgeGroup() == null) return false;
         return ageGroupService.getAgeGroup(request.getAgeGroup()).isPresent();
     }
 
@@ -147,7 +148,8 @@ public class PlayerRequestValidator extends PlayerRequestValidatorAbs {
     @Override
     public boolean isPinCodeValid() {
         System.out.println("checking pincode");
-        return request.getPinCode() >= 100000 || request.getPinCode() <= 999999;
+        if (request.getPinCode() == null) return true;
+        return request.getPinCode().length() == 0 || request.getPinCode().length() == 6 || request.getPinCode().matches("[0-9]");
     }
 
     @Override

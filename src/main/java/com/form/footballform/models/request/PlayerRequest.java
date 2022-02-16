@@ -14,14 +14,14 @@ public class PlayerRequest {
     private Long city;
     private Long state;
     private Long country;
-    private Integer pinCode;
+    private String pinCode;
     private Long desiredTeam;
     private List<Long> desiredPositions;
 
     public PlayerRequest() {
     }
 
-    public PlayerRequest(String userName, String firstName, String lastName, Long countryCode, String phoneNumber, String email, Long ageGroup, String address, Long city, Long state, Long country, Integer pinCode, Long desiredTeam, List<Long> desiredPositions) {
+    public PlayerRequest(String userName, String firstName, String lastName, Long countryCode, String phoneNumber, String email, Long ageGroup, String address, Long city, Long state, Long country, String pinCode, Long desiredTeam, List<Long> desiredPositions) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -126,11 +126,11 @@ public class PlayerRequest {
         this.country = country;
     }
 
-    public Integer getPinCode() {
+    public String getPinCode() {
         return pinCode;
     }
 
-    public void setPinCode(Integer pinCode) {
+    public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
     }
 

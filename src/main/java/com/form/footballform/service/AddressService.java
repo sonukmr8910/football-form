@@ -25,12 +25,12 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public Address saveAddress(Long id, String address, City city, int pinCode) {
+    public Address saveAddress(Long id, String address, City city, String pinCode) {
         Address a = new Address(id, address, city, pinCode);
         return saveAddress(a);
     }
 
-    public Address saveAddress(String address, City city, int pinCode) {
+    public Address saveAddress(String address, City city, String pinCode) {
         return saveAddress(null, address, city, pinCode);
     }
 

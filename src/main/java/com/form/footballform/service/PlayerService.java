@@ -116,10 +116,15 @@ public class PlayerService {
             player.setDesiredPositions(desiredPositions);
 
             City city = cityService.getCity(request.getCity()).get();
-            addressService.deleteAddress(player.getAddress());
-            Address address = new Address(request.getAddress(), city, request.getPinCode());
-            address = addressService.saveAddress(address);
-            player.setAddress(address);
+            Address playerAddress = player.getAddress();
+            playerAddress.setAddress(request.getAddress());
+            playerAddress.setCity(city);
+
+            if(request.getPinCode() != null)
+                playerAddress.setPinCode(request.getPinCode());
+
+            playerAddress = addressService.saveAddress(playerAddress);
+            player.setAddress(playerAddress);
 
             return savePlayer(player);
         }

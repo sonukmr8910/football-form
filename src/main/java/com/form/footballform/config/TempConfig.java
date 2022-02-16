@@ -64,7 +64,7 @@ public class TempConfig {
             cityService.saveCity(new City("Bijnor", stateKarnataka));
             cityService.saveCity(new City("Vikaspur", stateKarnataka));
 
-            Address address = addressService.saveAddress(new Address("Phase 1", city, 110011));
+            Address address = addressService.saveAddress(new Address("Phase 1", city, "110011"));
             AgeGroup ageGroup = ageGroupService.saveAgeGroup(new AgeGroup("25-30"));
 
             Team desiredTeam = teamService.saveTeam(new Team("Chelsea"));
