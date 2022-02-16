@@ -26,23 +26,43 @@ public class TempConfig {
         return args -> {
 
             //Initialization
-            Country country  = countryService.saveCountry(new Country("India"));
-            countryService.saveCountry(new Country("Sri Lanka"));
-            countryService.saveCountry(new Country("Australia"));
-            countryService.saveCountry(new Country("Afghanistan"));
-            countryService.saveCountry(new Country("China"));
+            Country countryIndia  = countryService.saveCountry(new Country("India"));
+            Country countrySriLanka = countryService.saveCountry(new Country("Sri Lanka"));
+            Country countryAustralia = countryService.saveCountry(new Country("Australia"));
+            Country countryAfghanistan = countryService.saveCountry(new Country("Afghanistan"));
+            Country countryChina = countryService.saveCountry(new Country("China"));
 
-            CountryCode countryCode = countryCodeService.saveCountryCode(new CountryCode("+91", country));
-            stateService.saveState(new State("Punjab", country));
+            CountryCode countryCode = countryCodeService.saveCountryCode(new CountryCode("+91", countryIndia));
+            countryCodeService.saveCountryCode(new CountryCode("+91", countrySriLanka));
+            countryCodeService.saveCountryCode(new CountryCode("+101", countryAustralia));
+            countryCodeService.saveCountryCode(new CountryCode("+82", countryAustralia));
+            countryCodeService.saveCountryCode(new CountryCode("+64", countryAfghanistan));
+            countryCodeService.saveCountryCode(new CountryCode("+75", countryChina));
 
-            State state = stateService.saveState(new State("Haryana", country));
-            stateService.saveState(new State("Uttarakhand", country));
-            stateService.saveState(new State("Mumbai", country));
+            State stateHaryana = stateService.saveState(new State("Haryana", countryIndia));
+            State statePunjab = stateService.saveState(new State("Punjab", countryIndia));
+            State stateUttarakhand = stateService.saveState(new State("Uttarakhand", countryIndia));
+            State stateKarnataka = stateService.saveState(new State("Karnataka", countryIndia));
 
-            City city = cityService.saveCity(new City("Rewari", state));
+            City city = cityService.saveCity(new City("Rewari", stateHaryana));
+            cityService.saveCity(new City("Mandari", stateHaryana));
+            cityService.saveCity(new City("Gopinath", stateHaryana));
+            cityService.saveCity(new City("Shivnagar", stateHaryana));
 
-            cityService.saveCity(new City("Kharar", state));
-            cityService.saveCity(new City("Sector 120", state));
+            cityService.saveCity(new City("Kharar", statePunjab));
+            cityService.saveCity(new City("Mohali", statePunjab));
+            cityService.saveCity(new City("Daun", statePunjab));
+            cityService.saveCity(new City("Zirkpur", statePunjab));
+
+            cityService.saveCity(new City("Bageshwar", stateUttarakhand));
+            cityService.saveCity(new City("Chamoli", stateUttarakhand));
+            cityService.saveCity(new City("Dehradun", stateUttarakhand));
+            cityService.saveCity(new City("Almora", stateUttarakhand));
+
+            cityService.saveCity(new City("Bangalore", stateKarnataka));
+            cityService.saveCity(new City("KR Puram", stateKarnataka));
+            cityService.saveCity(new City("Bijnor", stateKarnataka));
+            cityService.saveCity(new City("Vikaspur", stateKarnataka));
 
             Address address = addressService.saveAddress(new Address("Phase 1", city, 110011));
             AgeGroup ageGroup = ageGroupService.saveAgeGroup(new AgeGroup("25-30"));
