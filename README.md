@@ -49,7 +49,7 @@ This project is build using the following technology stack:
 #### Database
 ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
-##Getting Started
+## Getting Started
 The following are the steps for you to get started.
 
 ### Prerequisites
