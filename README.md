@@ -72,12 +72,14 @@ The following steps guide you to running up the server.
 https://github.com/sonukmr8910/football-form
 ```
 2. Get in to the project directory called `football-form`.
-3. Run the project either using the IDE or using the command-line.
+3. Run the project either using the IDE or using the command-line
 ```shell
 gradlew bootRun
 ```
-4. Goto `http://localhost:8080` in your browsers.
-
+4. In the web browser, visit
+```
+http://localhost:8080
+```
 ## Roadmap
 - [ ] Frontend
     - [x] Basic Structure
