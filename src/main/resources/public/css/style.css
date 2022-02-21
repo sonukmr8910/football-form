@@ -33,3 +33,8 @@ input::-webkit-input-placeholder {
 #country-code {
   max-width: 80px;
 }
+
+#email-with-toggle {
+  display: flex;
+  justify-content: space-between;
+}
