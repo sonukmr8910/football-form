@@ -99,15 +99,12 @@ public class FootballController {
         }
 
         if (!validator.isValid()) {
-            System.out.println("Data is not valid");
-            System.out.println(request);
             responseBuilder
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
                     .setErrorMessage("Data is not valid");
             return new ResponseEntity<>(responseBuilder.build(), HttpStatus.OK);
         }
 
-        System.out.println("Reach");
         Player savedPlayer = playerService.savePlayer(request);
         if (savedPlayer == null) {
             responseBuilder
@@ -131,8 +128,6 @@ public class FootballController {
         Response.ResponseBuilder<Player> responseBuilder = new Response.ResponseBuilder<>();
 
         if (!validator.isValid()) {
-            System.out.println("Data is not valid");
-            System.out.println(request);
             responseBuilder
                     .setHttpStatusCode(HttpStatus.BAD_REQUEST.value())
                     .setErrorMessage("Data is not valid");
