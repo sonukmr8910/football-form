@@ -18,6 +18,7 @@
                 <label for="username" class="form-label">USERNAME <sup class="text-danger">*</sup></label>
                 <div class="input-group">
                   <input type="text" name="username" id="username" class="form-control" placeholder="What is your username?"/>
+
                   <button class="btn btn-outline-secondary" type="button" id="search-btn">GET</button>
                 </div>
             </div>
@@ -50,7 +51,7 @@
                 </div>
                 <div class="col-md-4 border-bottom cell">
                     <label for="age-group" class="form-label">AGE GROUP <sup class="text-danger">*</sup></label>
-                    <select name="age-group" id="age-group" class="form-select">
+                    <select name="age-group" id="age-group" class="form-select" required>
                     </select>
                 </div>
                 <div class="col-md-3 border-end border-bottom cell">
@@ -119,17 +120,17 @@
             <div class="d-grid col-md-6 mx-auto">
                 <div class="form-group my-3">
                     <label for="country" class="form-label">COUNTRY <sup class="text-danger">*</sup></label>
-                    <select name="country" id="country" class="form-select">
+                    <select name="country" id="country" class="form-select" required>
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="country" class="form-label">STATE <sup class="text-danger">*</sup></label>
-                    <select name="state" id="state" class="form-select">
+                    <select name="state" id="state" class="form-select" required>
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="country" class="form-label">CITY <sup class="text-danger">*</sup></label>
-                    <select name="city" id="city" class="form-select">
+                    <select name="city" id="city" class="form-select" required>
                     </select>
                 </div>
             </div>
