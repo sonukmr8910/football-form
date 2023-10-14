@@ -101,10 +101,6 @@ Distributed under GPL v3.0.
 For more information see `LICENSE` file.
 
 ## Contact
-Sonu Kumar K
-
-<a href="mailto:someone@example.com">Send an email</a>
-
 [LinkedIn](https://linkedin.com/in/sonukmr8910)
 
 ## Acknowledgements
